@@ -12,16 +12,19 @@ class _HomeState extends State<Home> {
       body: Stack(
         children: [
           Container(
-            color: Colors.deepOrange,
-          ),
-          SafeArea(
-              child: Column(
-                children: [
-                  Text("Text 1"),
-                  Text("Text 2"),
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Color(0xff213A50),
+                  Color(0xff071938)
                 ],
+              ),
+            ),
+          ),
+          SafeArea(child: Text("HELLO I AM HOME PAGE" ,style: TextStyle(color: Colors.white),)),
 
-          ))
 
         ],
       ),
