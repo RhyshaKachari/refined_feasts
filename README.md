@@ -1,4 +1,4 @@
-# refined_feasts
+# Refined Feasts
 
 A new Flutter project.
 
