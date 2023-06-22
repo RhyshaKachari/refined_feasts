@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart';
+import 'package:flutter_config/flutter_config.dart';
+import 'dart:convert';
+
 
 class Home extends StatefulWidget {
   @override
@@ -7,6 +12,21 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   TextEditingController searchContoller = new TextEditingController();
+  getReceipe(String query)async{
+    String api_id = await FlutterConfig.get('API_ID');
+    String api_key = await FlutterConfig.get('API_KEY');
+    var url = Uri.parse("https://api.edamam.com/search?q=$query&app_id=$api_id&app_key=$api_key");
+    http.Response response = await http.get(url);
+    Map data =  jsonDecode(response.body);
+    print(data);
+
+  }
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getReceipe("Laddoo");
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,9 +63,7 @@ class _HomeState extends State<Home> {
                           print("Blank search");
                         }
                         else{
-                          Navigator.pushReplacementNamed(context, "/loading",arguments: {
-                            "searchText" : searchContoller.text,
-                          });
+                          getReceipe(searchContoller.text);
                         }
 
                         print(searchContoller.text);
@@ -78,11 +96,11 @@ class _HomeState extends State<Home> {
                crossAxisAlignment: CrossAxisAlignment.start,
                children: [
                  Text("WHAT DO YOU WANT TO COOK TODAY ?", style: TextStyle(
-                   color: Colors.white, fontSize: 33,
+                   color: Colors.white, fontSize: 33, fontFamily: "Poppins"
                  ),),
                  SizedBox(height: 10,),
                  Text("Let's Cook Something New!" , style: TextStyle(
-                   color: Colors.white, fontSize: 20,
+                   color: Colors.white, fontSize: 20,fontFamily: "Poppins"
                  ),)
                ],
              ),
