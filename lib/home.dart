@@ -56,68 +56,80 @@ class _HomeState extends State<Home> {
               ),
             ),
           ),
-        Column(
-          children: [
-            SafeArea(
-              child: Container(
-                // Search wala container
-                // color: Colors.grey,
-                padding: EdgeInsets.symmetric(horizontal: 8),
-                margin: EdgeInsets.symmetric(horizontal: 24, vertical: 20),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(24)),
-                child: Row(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        if((searchContoller.text).replaceAll(" ", "") == ""){
-                          print("Blank search");
-                        }
-                        else{
-                          getReceipe(searchContoller.text);
-                        }
+        SingleChildScrollView(
+          child: Column(
+            children: [
+              SafeArea(
+                child: Container(
+                  // Search wala container
+                  // color: Colors.grey,
+                  padding: EdgeInsets.symmetric(horizontal: 8),
+                  margin: EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(24)),
+                  child: Row(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          if((searchContoller.text).replaceAll(" ", "") == ""){
+                            print("Blank search");
+                          }
+                          else{
+                            getReceipe(searchContoller.text);
+                          }
 
-                        print(searchContoller.text);
-                      },
-                      child: Container(
-                        child: Icon(
-                          Icons.search,
-                          color: Colors.blueAccent,
-                        ),
-                        margin: EdgeInsets.fromLTRB(3, 0, 7, 0),
-                      ),
-                    ),
-                    Expanded(
-                        child: TextField(
-                          controller: searchContoller,
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: "Let's Cook Something",
+                          print(searchContoller.text);
+                        },
+                        child: Container(
+                          child: Icon(
+                            Icons.search,
+                            color: Colors.blueAccent,
                           ),
-                        )
-                    ),
-                  ],
+                          margin: EdgeInsets.fromLTRB(3, 0, 7, 0),
+                        ),
+                      ),
+                      Expanded(
+                          child: TextField(
+                            controller: searchContoller,
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: "Let's Cook Something",
+                            ),
+                          )
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
 
-           Container(
-             padding: EdgeInsets.symmetric(horizontal:20 ),
-             child: Column(
-               crossAxisAlignment: CrossAxisAlignment.start,
-               children: [
-                 Text("WHAT DO YOU WANT TO COOK TODAY ?", style: TextStyle(
-                   color: Colors.white, fontSize: 33, fontFamily: "Poppins"
-                 ),),
-                 SizedBox(height: 10,),
-                 Text("Let's Cook Something New!" , style: TextStyle(
-                   color: Colors.white, fontSize: 20,fontFamily: "Poppins"
-                 ),)
-               ],
+             Container(
+               padding: EdgeInsets.symmetric(horizontal:20 ),
+               child: Column(
+                 crossAxisAlignment: CrossAxisAlignment.start,
+                 children: [
+                   Text("WHAT DO YOU WANT TO COOK TODAY ?", style: TextStyle(
+                     color: Colors.white, fontSize: 33, fontFamily: "Poppins"
+                   ),),
+                   SizedBox(height: 10,),
+                   Text("Let's Cook Something New!" , style: TextStyle(
+                     color: Colors.white, fontSize: 20,fontFamily: "Poppins"
+                   ),)
+                 ],
+               ),
              ),
-           )
+              Container(
+                child: ListView.builder(
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: 12,
+                  itemBuilder: (context , index){
+                  return RhyshaText();
+                }, ),
+              )
+
     ],
+          ),
         )
 
 
@@ -126,3 +138,9 @@ class _HomeState extends State<Home> {
     );
   }
 }
+
+Widget RhyshaText(){
+ return Text("Rhysha");
+}
+
+
