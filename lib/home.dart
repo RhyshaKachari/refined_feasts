@@ -15,6 +15,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   List<RecipeModel> recipeList = <RecipeModel>[];
   TextEditingController searchContoller = new TextEditingController();
+  List receiptCatList =[{"imgUrl": "https://images.unsplash.com/photo-1593560704563-f176a2eb61db", "heading": "Chilli Food"},{"imgUrl": "https://images.unsplash.com/photo-1593560704563-f176a2eb61db", "heading": "Chilli Food"},{"imgUrl": "https://images.unsplash.com/photo-1593560704563-f176a2eb61db", "heading": "Chilli Food"},{"imgUrl": "https://images.unsplash.com/photo-1593560704563-f176a2eb61db", "heading": "Chilli Food"}];
   getReceipe(String query) async {
     String api_id = await FlutterConfig.get('API_ID');
     String api_key = await FlutterConfig.get('API_KEY');
@@ -194,9 +195,66 @@ class _HomeState extends State<Home> {
                       );
                     },
                   ),
+                ),
+                Container(
+                  height: 100,
+                  child: ListView.builder(
+                    itemCount: receiptCatList.length , shrinkWrap: true,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index){
+                      return Container(
+                        child: InkWell(
+                          onTap: (){},
+                          child: Card(
+                            margin: EdgeInsets.all(20),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18),
+                            ) ,
+                            elevation: 0.0,
+                            child: Stack(
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(18.0),
+                                  child: Image.network(receiptCatList[index]["imgUrl"] , fit: BoxFit.cover ,width: 200,
+                                  height: 250,),
+                                ),
+                                Positioned(
+                                  left: 0,
+                                  right: 0,
+                                  bottom: 0,
+                                  top: 0,
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(
+                                      vertical: 5, horizontal: 10
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: Colors.black26
+                                    ),
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          receiptCatList[index]["heading"],
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 28
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ) ,
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
+
+                  }),
                 )
               ],
             ),
+
           )
         ],
       ),
@@ -204,6 +262,3 @@ class _HomeState extends State<Home> {
   }
 }
 
-Widget RhyshaText() {
-  return Text("Rhysha");
-}
