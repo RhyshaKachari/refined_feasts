@@ -7,38 +7,40 @@ import 'dart:developer';
 
 import 'package:refined_feasts/model.dart';
 
-
 class Home extends StatefulWidget {
   @override
   State<Home> createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
-  List<RecipeModel> recipeList = <RecipeModel>[] ;
+  List<RecipeModel> recipeList = <RecipeModel>[];
   TextEditingController searchContoller = new TextEditingController();
-  getReceipe(String query)async{
+  getReceipe(String query) async {
     String api_id = await FlutterConfig.get('API_ID');
     String api_key = await FlutterConfig.get('API_KEY');
-    var url = Uri.parse("https://api.edamam.com/search?q=$query&app_id=$api_id&app_key=$api_key");
+    var url = Uri.parse(
+        "https://api.edamam.com/search?q=$query&app_id=$api_id&app_key=$api_key");
     http.Response response = await http.get(url);
-    Map data =  jsonDecode(response.body);
+    Map data = jsonDecode(response.body);
     // log(data.toString());
 
-    data["hits"].forEach((element){
+    data["hits"].forEach((element) {
       RecipeModel recipeModel = new RecipeModel();
       recipeModel = RecipeModel.fromMap(element["recipe"]);
       recipeList.add(recipeModel);
     });
- recipeList.forEach((Recipe) {
-   print(Recipe.applabel);
- });
+    recipeList.forEach((Recipe) {
+      print(Recipe.applabel);
+    });
   }
-@override
+
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
     getReceipe("Laddoo");
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,98 +51,159 @@ class _HomeState extends State<Home> {
             height: MediaQuery.of(context).size.height,
             decoration: BoxDecoration(
               gradient: LinearGradient(
-                colors: [
-                  Color(0xff213A50),
-                  Color(0xff071938)
-                ],
+                colors: [Color(0xff213A50), Color(0xff071938)],
               ),
             ),
           ),
-        SingleChildScrollView(
-          child: Column(
-            children: [
-              SafeArea(
-                child: Container(
-                  // Search wala container
-                  // color: Colors.grey,
-                  padding: EdgeInsets.symmetric(horizontal: 8),
-                  margin: EdgeInsets.symmetric(horizontal: 24, vertical: 20),
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(24)),
-                  child: Row(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          if((searchContoller.text).replaceAll(" ", "") == ""){
-                            print("Blank search");
-                          }
-                          else{
-                            getReceipe(searchContoller.text);
-                          }
+          SingleChildScrollView(
+            child: Column(
+              children: [
+                SafeArea(
+                  child: Container(
+                    // Search wala container
+                    // color: Colors.grey,
+                    padding: EdgeInsets.symmetric(horizontal: 8),
+                    margin: EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(24)),
+                    child: Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            if ((searchContoller.text).replaceAll(" ", "") ==
+                                "") {
+                              print("Blank search");
+                            } else {
+                              getReceipe(searchContoller.text);
+                            }
 
-                          print(searchContoller.text);
-                        },
-                        child: Container(
-                          child: Icon(
-                            Icons.search,
-                            color: Colors.blueAccent,
-                          ),
-                          margin: EdgeInsets.fromLTRB(3, 0, 7, 0),
-                        ),
-                      ),
-                      Expanded(
-                          child: TextField(
-                            controller: searchContoller,
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              hintText: "Let's Cook Something",
+                            print(searchContoller.text);
+                          },
+                          child: Container(
+                            child: Icon(
+                              Icons.search,
+                              color: Colors.blueAccent,
                             ),
-                          )
+                            margin: EdgeInsets.fromLTRB(3, 0, 7, 0),
+                          ),
+                        ),
+                        Expanded(
+                            child: TextField(
+                          controller: searchContoller,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: "Let's Cook Something",
+                          ),
+                        )),
+                      ],
+                    ),
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "WHAT DO YOU WANT TO COOK TODAY ?",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 33,
+                            fontFamily: "Poppins"),
                       ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        "Let's Cook Something New!",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontFamily: "Poppins"),
+                      )
                     ],
                   ),
                 ),
-              ),
-
-             Container(
-               padding: EdgeInsets.symmetric(horizontal:20 ),
-               child: Column(
-                 crossAxisAlignment: CrossAxisAlignment.start,
-                 children: [
-                   Text("WHAT DO YOU WANT TO COOK TODAY ?", style: TextStyle(
-                     color: Colors.white, fontSize: 33, fontFamily: "Poppins"
-                   ),),
-                   SizedBox(height: 10,),
-                   Text("Let's Cook Something New!" , style: TextStyle(
-                     color: Colors.white, fontSize: 20,fontFamily: "Poppins"
-                   ),)
-                 ],
-               ),
-             ),
-              Container(
-                child: ListView.builder(
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: 12,
-                  itemBuilder: (context , index){
-                  return RhyshaText();
-                }, ),
-              )
-
-    ],
-          ),
-        )
-
-
+                Container(
+                  child: ListView.builder(
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: recipeList.length,
+                    itemBuilder: (context, index) {
+                      return InkWell(
+                        onTap: () {},
+                        child: Card(
+                          margin: EdgeInsets.all(10),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                          elevation: 0.0,
+                          child: Stack(
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(10.0),
+                                child: Image.network(
+                                  recipeList[index].appimgUrl,
+                                  fit: BoxFit.cover,
+                                  width: double.infinity,
+                                  height: 200,
+                                ),
+                              ),
+                              Positioned(
+                                  left: 0,
+                                  right: 0,
+                                  bottom: 0,
+                                  child: Container(
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 5, horizontal: 10),
+                                      decoration:
+                                          BoxDecoration(color: Colors.black26),
+                                      child: Text(
+                                        recipeList[index].applabel,
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ))),
+                              Positioned(
+                                right: 0,
+                                width: 80,
+                                height: 40,
+                                child: Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.only(
+                                        topRight: Radius.circular(10),
+                                        bottomLeft: Radius.circular(10),
+                                      )
+                                    ),
+                                    child: Center(
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Icon(Icons.local_fire_department),
+                                          Text(recipeList[index].appcalories.toString().substring(0,6)),
+                                        ],
+                                      ),
+                                    )),
+                              )
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                )
+              ],
+            ),
+          )
         ],
       ),
     );
   }
 }
 
-Widget RhyshaText(){
- return Text("Rhysha");
+Widget RhyshaText() {
+  return Text("Rhysha");
 }
-
-
