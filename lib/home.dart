@@ -3,6 +3,9 @@ import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:flutter_config/flutter_config.dart';
 import 'dart:convert';
+import 'dart:developer';
+
+import 'package:refined_feasts/model.dart';
 
 
 class Home extends StatefulWidget {
@@ -11,6 +14,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  List<RecipeModel> recipeList = <RecipeModel>[] ;
   TextEditingController searchContoller = new TextEditingController();
   getReceipe(String query)async{
     String api_id = await FlutterConfig.get('API_ID');
@@ -18,8 +22,16 @@ class _HomeState extends State<Home> {
     var url = Uri.parse("https://api.edamam.com/search?q=$query&app_id=$api_id&app_key=$api_key");
     http.Response response = await http.get(url);
     Map data =  jsonDecode(response.body);
-    print(data);
+    // log(data.toString());
 
+    data["hits"].forEach((element){
+      RecipeModel recipeModel = new RecipeModel();
+      recipeModel = RecipeModel.fromMap(element["recipe"]);
+      recipeList.add(recipeModel);
+    });
+ recipeList.forEach((Recipe) {
+   print(Recipe.applabel);
+ });
   }
 @override
   void initState() {
