@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:flutter_config/flutter_config.dart';
+import 'package:refined_feasts/RecipeView.dart';
 import 'dart:convert';
 import 'dart:developer';
 
@@ -17,7 +18,10 @@ class _HomeState extends State<Home> {
   bool isLoading = true ;
   List<RecipeModel> recipeList = <RecipeModel>[];
   TextEditingController searchContoller = new TextEditingController();
-  List receiptCatList =[{"imgUrl": "https://images.unsplash.com/photo-1593560704563-f176a2eb61db", "heading": "Chilly Food"},{"imgUrl": "https://images.unsplash.com/photo-1593560704563-f176a2eb61db", "heading": "Chilly Food"},{"imgUrl": "https://images.unsplash.com/photo-1593560704563-f176a2eb61db", "heading": "Chilly Food"},{"imgUrl": "https://images.unsplash.com/photo-1593560704563-f176a2eb61db", "heading": "Chilli Food"}];
+  List receiptCatList =[{"imgUrl": "https://food.fnr.sndimg.com/content/dam/images/food/fullset/2013/10/30/1/FNK_Spicy-Beef-Chili_s4x3.jpg.rend.hgtvcom.616.462.suffix/1389046130875.jpeg", "heading": "Chilly Food"},
+    {"imgUrl": "https://www.expatica.com/app/uploads/sites/19/2022/12/italian-cuisine.jpg", "heading": "Italian Food"},
+    {"imgUrl": "https://cdn.tasteatlas.com//Images/Dishes/4cc2758bb1354d4e8b1e018105767fed.jpg?w=375&h=280", "heading": "Chinese Food"},
+    {"imgUrl": "https://images.unsplash.com/photo-1593560704563-f176a2eb61db", "heading": "Indian Food"}];
   getReceipe(String query) async {
     String api_id = await FlutterConfig.get('API_ID');
     String api_key = await FlutterConfig.get('API_KEY');
@@ -138,7 +142,9 @@ class _HomeState extends State<Home> {
                     itemCount: recipeList.length,
                     itemBuilder: (context, index) {
                       return InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => RecipeView(recipeList[index].appurl)));
+                        },
                         child: Card(
                           margin: EdgeInsets.all(10),
                           shape: RoundedRectangleBorder(
@@ -209,7 +215,9 @@ class _HomeState extends State<Home> {
                       itemBuilder: (context, index){
                       return Container(
                         child: InkWell(
-                          onTap: (){},
+                          onTap: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => Search(receiptCatList[index]["heading"])));
+                          },
                           child: Card(
                             margin: EdgeInsets.all(20),
                             shape: RoundedRectangleBorder(
@@ -220,7 +228,7 @@ class _HomeState extends State<Home> {
                               children: [
                                 ClipRRect(
                                   borderRadius: BorderRadius.circular(18.0),
-                                  child: Image.network("https://food.fnr.sndimg.com/content/dam/images/food/fullset/2013/10/30/1/FNK_Spicy-Beef-Chili_s4x3.jpg.rend.hgtvcom.616.462.suffix/1389046130875.jpeg" , fit: BoxFit.cover ,width: 200,
+                                  child: Image.network(receiptCatList[index]["imgUrl"], fit: BoxFit.cover ,width: 200,
                                   height: 250,),
                                 ),
                                 Positioned(

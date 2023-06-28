@@ -4,6 +4,7 @@ import 'package:http_parser/http_parser.dart';
 import 'package:flutter_config/flutter_config.dart';
 import 'dart:convert';
 import 'dart:developer';
+import 'package:refined_feasts/RecipeView.dart ';
 
 import 'package:refined_feasts/model.dart';
 
@@ -116,7 +117,9 @@ class _SearchState extends State<Search> {
                     itemCount: recipeList.length,
                     itemBuilder: (context, index) {
                       return InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => RecipeView(recipeList[index].appurl)));
+                        },
                         child: Card(
                           margin: EdgeInsets.all(10),
                           shape: RoundedRectangleBorder(
