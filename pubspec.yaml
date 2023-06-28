@@ -39,6 +39,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   http:
   flutter_config:
+  webview_flutter: ^2.5.0
 
 
 dev_dependencies:
