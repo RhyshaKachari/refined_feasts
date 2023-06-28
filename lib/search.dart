@@ -6,18 +6,20 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:refined_feasts/model.dart';
-import 'package:refined_feasts/search.dart';
 
-class Home extends StatefulWidget {
+class Search extends StatefulWidget {
+ String query ;
+ Search(this.query);
+
   @override
-  State<Home> createState() => _HomeState();
+  State<Search> createState() => _SearchState();
 }
 
-class _HomeState extends State<Home> {
+class _SearchState extends State<Search> {
   bool isLoading = true ;
   List<RecipeModel> recipeList = <RecipeModel>[];
   TextEditingController searchContoller = new TextEditingController();
-  List receiptCatList =[{"imgUrl": "https://images.unsplash.com/photo-1593560704563-f176a2eb61db", "heading": "Chilly Food"},{"imgUrl": "https://images.unsplash.com/photo-1593560704563-f176a2eb61db", "heading": "Chilly Food"},{"imgUrl": "https://images.unsplash.com/photo-1593560704563-f176a2eb61db", "heading": "Chilly Food"},{"imgUrl": "https://images.unsplash.com/photo-1593560704563-f176a2eb61db", "heading": "Chilli Food"}];
+  List receiptCatList =[{"imgUrl": "https://images.unsplash.com/photo-1593560704563-f176a2eb61db", "heading": "Chilli Food"},{"imgUrl": "https://images.unsplash.com/photo-1593560704563-f176a2eb61db", "heading": "Chilli Food"},{"imgUrl": "https://images.unsplash.com/photo-1593560704563-f176a2eb61db", "heading": "Chilli Food"},{"imgUrl": "https://images.unsplash.com/photo-1593560704563-f176a2eb61db", "heading": "Chilli Food"}];
   getReceipe(String query) async {
     String api_id = await FlutterConfig.get('API_ID');
     String api_key = await FlutterConfig.get('API_KEY');
@@ -44,7 +46,7 @@ class _HomeState extends State<Home> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    getReceipe("Laddoo");
+    getReceipe(widget.query);
   }
 
   @override
@@ -81,7 +83,7 @@ class _HomeState extends State<Home> {
                                 "") {
                               print("Blank search");
                             } else {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => Search(searchContoller.text)));
+                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Search(searchContoller.text)));
                             }
 
                             print(searchContoller.text);
@@ -96,43 +98,19 @@ class _HomeState extends State<Home> {
                         ),
                         Expanded(
                             child: TextField(
-                          controller: searchContoller,
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: "Let's Cook Something",
-                          ),
-                        )),
+                              controller: searchContoller,
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                hintText: "Let's Cook Something",
+                              ),
+                            )),
                       ],
                     ),
                   ),
                 ),
+
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "WHAT DO YOU WANT TO COOK TODAY ?",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 33,
-                            fontFamily: "Poppins"),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        "Let's Cook Something New!",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontFamily: "Poppins"),
-                      )
-                    ],
-                  ),
-                ),
-                Container(
-                  child: isLoading? CircularProgressIndicator() : ListView.builder(
+                  child: isLoading? Center(child: CircularProgressIndicator()) : ListView.builder(
                     physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     itemCount: recipeList.length,
@@ -163,7 +141,7 @@ class _HomeState extends State<Home> {
                                       padding: EdgeInsets.symmetric(
                                           vertical: 5, horizontal: 10),
                                       decoration:
-                                          BoxDecoration(color: Colors.black26),
+                                      BoxDecoration(color: Colors.black26),
                                       child: Text(
                                         recipeList[index].applabel,
                                         style: TextStyle(
@@ -178,11 +156,11 @@ class _HomeState extends State<Home> {
                                 height: 40,
                                 child: Container(
                                     decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.only(
-                                        topRight: Radius.circular(10),
-                                        bottomLeft: Radius.circular(10),
-                                      )
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.only(
+                                          topRight: Radius.circular(10),
+                                          bottomLeft: Radius.circular(10),
+                                        )
                                     ),
                                     child: Center(
                                       child: Row(
@@ -201,62 +179,6 @@ class _HomeState extends State<Home> {
                     },
                   ),
                 ),
-                Container(
-                  height: 100,
-                  child: ListView.builder(
-                    itemCount: receiptCatList.length , shrinkWrap: true,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index){
-                      return Container(
-                        child: InkWell(
-                          onTap: (){},
-                          child: Card(
-                            margin: EdgeInsets.all(20),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(18),
-                            ) ,
-                            elevation: 0.0,
-                            child: Stack(
-                              children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(18.0),
-                                  child: Image.network("https://food.fnr.sndimg.com/content/dam/images/food/fullset/2013/10/30/1/FNK_Spicy-Beef-Chili_s4x3.jpg.rend.hgtvcom.616.462.suffix/1389046130875.jpeg" , fit: BoxFit.cover ,width: 200,
-                                  height: 250,),
-                                ),
-                                Positioned(
-                                  left: 0,
-                                  right: 0,
-                                  bottom: 0,
-                                  top: 0,
-                                  child: Container(
-                                    padding: EdgeInsets.symmetric(
-                                      vertical: 5, horizontal: 10
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: Colors.black26
-                                    ),
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          receiptCatList[index]["heading"],
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 28
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ) ,
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                      );
-
-                  }),
-                )
               ],
             ),
 
@@ -266,4 +188,5 @@ class _HomeState extends State<Home> {
     );
   }
 }
+
 
