@@ -1,16 +1,8 @@
-# Refined Feasts
+##Explore the project
 
-A new Flutter project.
+- Try my project: \
+- Get the APK from [here](https://drive.google.com/file/d/1kJWN8zN-eIvYP8SrDZph9qqQV4NMtbSd/view?usp=sharing)
 
-## Getting Started
+##Refined Feasts
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+This is a Flutter-based mobile application that provides users with a wide range of food recipes. It aims to help users discover new recipes, explore different cuisines, and enhance their cooking skills. The app utilizes an API to fetch recipe data and offers a user-friendly interface for a seamless recipe browsing experience.
