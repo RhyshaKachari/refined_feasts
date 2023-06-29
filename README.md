@@ -25,4 +25,5 @@ Project is: _being worked on_.
 ### Contact
 
 Created by [@RhyshaKachari](https://github.com/RhyshaKachari)
-Email:- [Rhysha Kachari](mailto: rhyshakachari2003@gmail.com) - feel free to contact me!
+
+Email:-[Rhysha Kachari](mailto:rhyshakachari2003@gmail.com) - feel free to contact me!
