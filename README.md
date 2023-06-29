@@ -16,4 +16,13 @@ This is a Flutter-based mobile application that provides users with a wide range
 
 - <b>Flutter: </b>The app is developed using the Flutter framework, allowing for cross-platform compatibility.
 - <b>Dart: </b>Dart is the programming language used to write the code for the app.
-- <b>Food API: </b>The app integrates with a food API to fetch recipe data and related information.
+- <b>Edamam API: </b>The app integrates with this food API to fetch recipe data and related information.
+
+### Project Status
+Project is: _being worked on_.
+
+
+### Contact
+ 
+    Created by [@RhyshaKachari](https://github.com/RhyshaKachari)
+    Email:- [Rhysha Kachari](mailto: rhyshakachari2003@gmail.com) - feel free to contact me!
