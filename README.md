@@ -10,7 +10,6 @@ This is a Flutter-based mobile application that provides users with a wide range
 ### Features
 
 - <b>Recipe Search: </b> Search for recipes based on keywords, ingredients, or specific dietary requirements.
- <br>
 - <b>Recipe Details: </b>View detailed information about each recipe, including ingredients, preparation steps, cooking time, and nutritional information.
 
 ### Technologies Used
